@@ -1,7 +1,9 @@
-const express = required('express');
+const express = require('express');
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 
 app.use(express.json());
 
-app.listen(PORT,`Server started on port ${PORT}`);
+app.use('/products',require('./routes/products'));
+
+app.listen(PORT, () => `Server started on port ${PORT}`);
