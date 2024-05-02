@@ -15,10 +15,11 @@ const ProductController = {
 	},
 	async updateProduct(req, res) {
 		try {
-			const productToUpdate = update(req.body, {
+			const productToUpdate = Product.update(req.body, {
 				where: {
 				  id: req.params.id,
 				}},) /////<---------------------
+				res.send({msg: 'Product was updated', productToUpdate: req.body});
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);
