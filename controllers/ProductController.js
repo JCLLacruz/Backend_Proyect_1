@@ -1,4 +1,4 @@
-const { Product } = require('../models/index');
+const { Product, Category } = require('../models/index');
 
 //Implementa validación a la hora de crear un producto para que se rellene todos los campos y si no se hace que devuelva un mensaje. Solo podrás crear, actualizar y eliminar productos si estás autenticado.
 
@@ -32,7 +32,7 @@ const ProductController = {
 			res.status(500).send(error);
 		}
 	},
-	async findAllProducts(req, res) {
+	async getAll(req, res) {
 		//whit categories
 		try {
 		} catch (error) {
@@ -42,7 +42,7 @@ const ProductController = {
 	},
 	async findProductById(req, res) {
 		const product = await Product.findByPk(req.params.id);
-		res.send(product);
+		res.send({msg: 'Product finded: ', product});
 		try {
 		} catch (error) {
 			console.error(error);
