@@ -6,5 +6,6 @@ app.use(express.json());
 
 app.use('/products',require('./routes/products'));
 app.use('/categories',require('./routes/categories'));
+app.use('/users',require('./routes/users'));
 
 app.listen(PORT, () => `Server started on port ${PORT}`);

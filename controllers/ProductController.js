@@ -1,4 +1,4 @@
-const { Product, Category, Sequelize } = require('../models/index');
+const { Product, Category, ProductCategory, Sequelize } = require('../models/index');
 const { Op } = Sequelize;
 
 //Implementa validación a la hora de crear un producto para que se rellene todos los campos y si no se hace que devuelva un mensaje. Solo podrás crear, actualizar y eliminar productos si estás autenticado.
@@ -17,12 +17,14 @@ const ProductController = {
 	},
 	async updateProduct(req, res) {
 		try {
-			const product = await Product.update(req.body, {
+			await Product.update(req.body, {
 				where: {
 					id: req.params.id,
 				},
 			});
-			res.send({ msg: 'Product was updated', productToUpdate: req.body });
+			const product = await Product.findByPk(req.params.id);
+			product.setCategories(req.body.CategoryId);
+			res.send({ msg: 'Product was updated', productToUpdate: product });
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);
@@ -30,7 +32,8 @@ const ProductController = {
 	},
 	async deleteProductById(req, res) {
 		try {
-			const product = await Product.destroy({ where: { id: req.params.id } });
+			await Product.destroy({ where: { id: req.params.id } });
+			await ProductCategory.destroy({ where: {ProductId: req.params.id}});
 			res.send({ msg: 'Product was deleted.' });
 		} catch (error) {
 			console.error(error);
@@ -40,7 +43,7 @@ const ProductController = {
 	async getAll(req, res) {
 		try {
 			const products = await Product.findAll({
-				include: [Category],
+				include: [{model: Category, through: {attributes: []}}],
 			});
 			res.send({ msg: 'All products with our categories: ', products });
 		} catch (error) {
