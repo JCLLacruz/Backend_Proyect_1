@@ -15,11 +15,15 @@ const ProductController = {
 	},
 	async updateProduct(req, res) {
 		try {
+			const productToUpdate = update(req.body, {
+				where: {
+				  id: req.params.id,
+				}},) /////<---------------------
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);
-		}
-	},
+	}
+},
 	async deleteProduct(req, res) {
 		try {
 		} catch (error) {
@@ -36,7 +40,8 @@ const ProductController = {
 		}
 	},
 	async findProductById(req, res) {
-		//By Id
+		const product = await Product.findByPk(req.params.id);
+		res.send(product);
 		try {
 		} catch (error) {
 			console.error(error);
