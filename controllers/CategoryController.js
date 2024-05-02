@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const { Product, Category } = require('../models/index');
 
 const CategoryController = {
@@ -43,6 +44,28 @@ const CategoryController = {
 			res.status(500).send(error);
 		}
 	},
+	async getOneById(req, res) {
+		try {
+			const category = await Category.findOne({
+				where: {id: req.params.id}
+			});
+			res.send({msg: `Category with id: ${req.params.id} is: ${category.category}`, category});
+		} catch (error) {
+			console.error(error);
+			res.status(500).send(error);
+		}
+	},
+	async getByName(req,res) {
+		try {
+			const category = await Category.findOne({
+				where: {category: req.params.category}
+			});
+			res.send({msg: `Category ${req.params.category} was finded`,category});
+		} catch (error) {
+			console.error(error);
+			res.status(500).send(error);
+		}
+	}
 };
 
 module.exports = CategoryController;
