@@ -1,10 +1,7 @@
 const { Product, Category, ProductCategory, Sequelize } = require('../models/index');
 const { Op } = Sequelize;
 
-//Implementa validación a la hora de crear un producto para que se rellene todos los campos y si no se hace que devuelva un mensaje. Solo podrás crear, actualizar y eliminar productos si estás autenticado.
-
 const ProductController = {
-	//atributtes: name, description, img, price, stock, WarehouseId, CategoryId
 	async addProduct(req, res) {
 		try {
 			const product = await Product.create(req.body);
@@ -45,7 +42,7 @@ const ProductController = {
 			const products = await Product.findAll({
 				include: [{model: Category, through: {attributes: []}}],
 			});
-			res.send({ msg: 'All products with our categories: ', products });
+			res.send({ msg: 'All products with their categories: ', products });
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);

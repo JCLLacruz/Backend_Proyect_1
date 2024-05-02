@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Product.belongsToMany(models.Category,{through:models.ProductCategory});
       Product.belongsToMany(models.Order,{through:models.ProductOrder});
-
+      Product.hasMany(models.Review);
     }
   }
   Product.init({
