@@ -1,4 +1,4 @@
-const { Product, Category, ProductCategory, Sequelize } = require('../models/index');
+const { Product, Category, ProductCategory, Sequelize, Review } = require('../models/index');
 const { Op } = Sequelize;
 
 const ProductController = {
@@ -21,7 +21,7 @@ const ProductController = {
 			});
 			const product = await Product.findByPk(req.params.id);
 			product.setCategories(req.body.CategoryId);
-			res.send({ msg: 'Product was updated', productToUpdate: product });
+			res.send({ msg: 'Product was updated'});
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);
@@ -30,7 +30,7 @@ const ProductController = {
 	async deleteProductById(req, res) {
 		try {
 			await Product.destroy({ where: { id: req.params.id } });
-			await ProductCategory.destroy({ where: {ProductId: req.params.id}});
+			await ProductCategory.destroy({ where: { ProductId: req.params.id } });
 			res.send({ msg: 'Product was deleted.' });
 		} catch (error) {
 			console.error(error);
@@ -40,7 +40,10 @@ const ProductController = {
 	async getAll(req, res) {
 		try {
 			const products = await Product.findAll({
-				include: [{model: Category, through: {attributes: []}}],
+				include: [
+					{ model: Category, attributes: ['category'], through: { attributes: [] } },
+					{ model: Review, attributes: ['content']}
+			],
 			});
 			res.send({ msg: 'All products with their categories: ', products });
 		} catch (error) {
@@ -66,7 +69,7 @@ const ProductController = {
 					},
 				},
 			});
-			res.send({ msg: `Products whit name = ${req.params.name} finded.` });
+			res.send({ msg: `Products whit name = ${req.params.name} finded.`, product });
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);
@@ -90,13 +93,9 @@ const ProductController = {
 	async productsDescByPrice(req, res) {
 		try {
 			const products = await Product.findAll({
-				include: [
-					{
-					order: [['price','DESC']],
-				},
-			],
+				order: [['price', 'DESC']],
 			});
-			res.send({msg: `Products ordered in descending order`, products});
+			res.send({ msg: `Products ordered in descending order`, products });
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);

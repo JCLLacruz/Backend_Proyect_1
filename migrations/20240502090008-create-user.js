@@ -18,9 +18,6 @@ module.exports = {
       birthdate: {
         type: Sequelize.DATE
       },
-      created_at: {
-        type: Sequelize.DATE
-      },
       address: {
         type: Sequelize.STRING
       },

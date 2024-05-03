@@ -10,12 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Review.belongsTo(models.Product);
+      Review.belongsTo(models.User);
     }
   }
   Review.init({
     content: DataTypes.STRING,
-    created_at: DataTypes.DATE,
     UserId: DataTypes.INTEGER,
     ProductId: DataTypes.INTEGER
   }, {
