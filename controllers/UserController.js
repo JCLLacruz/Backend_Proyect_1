@@ -58,7 +58,7 @@ const UserController = {
 	},
 	async deleteById(req, res) {
 		try {
-            const user = await Category.destroy({where: {id: req.params.id}});
+            await User.destroy({where: {id: req.params.id}});
 			res.send({msg:'User was deleted.'})
 		} catch (error) {
 			console.error(error);
