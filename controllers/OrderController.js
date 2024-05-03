@@ -5,8 +5,9 @@ const OrderController = {
 	async getAll(req, res) {
 		try {
 			const orders = await Order.findAll({
-				include: [Product],
+				include: [{ model: Product, attributes: ['name'], through: { attributes: [] } }],
 			});
+			res.send({msg: `All orders`, orders});
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);
@@ -14,9 +15,10 @@ const OrderController = {
 	},
 	async addOrder(req, res) {
 		try {
-            const order = await Order.create(req.body);
-            order.addUser(req.body.UserId);
-            order.setProducts(req.body.ProductId);
+			const time = Date.now();
+            const today = new Date(time);
+            const order = await Order.create({...req.body,date: today,status: "ordered", UserId: req.user.id});
+            order.addProduct(req.body.ProductId);
             res.status(201).send({ msg: 'Order was created', order});
 		} catch (error) {
 			console.error(error);
