@@ -53,7 +53,13 @@ const ProductController = {
 	},
 	async getProductById(req, res) {
 		try {
-			const product = await Product.findByPk(req.params.id);
+			const product = await Product.findOne({
+				where: {id: req.params.id,},
+				include: [
+					{ model: Category, attributes: ['category'], through: { attributes: [] } },
+					{ model: Review, attributes: ['content']}
+				]
+			});
 			res.send({ msg: 'Product finded: ', product });
 		} catch (error) {
 			console.error(error);
