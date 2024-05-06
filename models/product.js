@@ -60,6 +60,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Product',
+    getterMethods: { 
+      image_url() {
+        return `/public/images/user/products/${this.img}`;
+      }
+    }
   });
   return Product;
 };

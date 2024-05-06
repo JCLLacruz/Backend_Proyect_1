@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { jwt_secret } = require('../config/config.json')['development'];
 const { Op } = Sequelize;
 const transporter = require('../config/nodemailer.js');
-const { PORT } = require('../index.js');
+const PORT = require('../index.js');
 
 const UserController = {
 	async singUp(req, res, next) {
