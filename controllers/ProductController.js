@@ -2,14 +2,14 @@ const { Product, Category, ProductCategory, Sequelize, Review } = require('../mo
 const { Op } = Sequelize;
 
 const ProductController = {
-	async addProduct(req, res) {
+	async addProduct(req, res, next) {
 		try {
 			const product = await Product.create(req.body);
 			product.addCategory(req.body.CategoryId);
 			res.status(201).send({ msg: 'Product was created', product: product });
 		} catch (error) {
 			console.error(error);
-			res.status(500).send(error);
+			next(error);
 		}
 	},
 	async updateProduct(req, res) {
@@ -24,7 +24,7 @@ const ProductController = {
 			res.send({ msg: 'Product was updated'});
 		} catch (error) {
 			console.error(error);
-			res.status(500).send(error);
+			next(error);
 		}
 	},
 	async deleteProductById(req, res) {
@@ -68,12 +68,16 @@ const ProductController = {
 	},
 	async getProductByName(req, res) {
 		try {
-			const product = await Product.findOne({
+			const product = await Product.findAll({
 				where: {
 					name: {
 						[Op.like]: `%${req.params.name}%`,
 					},
 				},
+				include: [
+					{ model: Category, attributes: ['category'], through: { attributes: [] } },
+					{ model: Review, attributes: ['content']}
+				]
 			});
 			res.send({ msg: `Products whit name = ${req.params.name} finded.`, product });
 		} catch (error) {
@@ -99,7 +103,26 @@ const ProductController = {
 	async productsDescByPrice(req, res) {
 		try {
 			const products = await Product.findAll({
+				include: [
+					{ model: Category, attributes: ['category'], through: { attributes: [] } },
+					{ model: Review, attributes: ['content']}
+				],
 				order: [['price', 'DESC']],
+			});
+			res.send({ msg: `Products ordered in descending order`, products });
+		} catch (error) {
+			console.error(error);
+			res.status(500).send(error);
+		}
+	},
+	async productsAscByPrice(req, res) {
+		try {
+			const products = await Product.findAll({
+				include: [
+					{ model: Category, attributes: ['category'], through: { attributes: [] } },
+					{ model: Review, attributes: ['content']}
+				],
+				order: [['price', 'ASC']],
 			});
 			res.send({ msg: `Products ordered in descending order`, products });
 		} catch (error) {

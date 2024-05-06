@@ -15,7 +15,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Review.init({
-    content: DataTypes.STRING,
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please fill in text in your review'
+        }
+      }
+    },
     UserId: DataTypes.INTEGER,
     ProductId: DataTypes.INTEGER
   }, {

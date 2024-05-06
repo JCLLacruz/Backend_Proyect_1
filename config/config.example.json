@@ -4,7 +4,9 @@
     "password": "your password",
     "database": "database_development",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "user": "your user email",
+    "pass": "your email password"
   },
   "test": {
     "username": "root",
