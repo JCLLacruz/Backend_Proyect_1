@@ -5,7 +5,7 @@ const OrderController = {
 	async getAll(req, res) {
 		try {
 			const orders = await Order.findAll({
-				include: [{ model: Product, attributes: ['name'], through: { attributes: [] } }],
+				include: [{ model: Product, attributes: ['id','name'], through: { attributes: [] } }],
 			});
 			res.send({msg: `All orders`, orders});
 		} catch (error) {

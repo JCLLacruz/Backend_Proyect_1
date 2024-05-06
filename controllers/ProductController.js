@@ -71,7 +71,7 @@ const ProductController = {
 	},
 	async getProductByName(req, res) {
 		try {
-			const product = await Product.findAll({
+			const products = await Product.findAll({
 				where: {
 					name: {
 						[Op.like]: `%${req.params.name}%`,
@@ -82,7 +82,7 @@ const ProductController = {
 					{ model: Review, attributes: ['content'] },
 				],
 			});
-			res.send({ msg: `Products whit name = ${req.params.name} finded.`, product });
+			res.send({ msg: `Products whit name = ${req.params.name} finded.`, products });
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);
