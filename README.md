@@ -273,7 +273,7 @@ Thanks to Sequelize's relations via intermediate tables, when a new product is c
   ```
 ## Documentation
 
-Postman documentation(https://documenter.getpostman.com/view/34523030/2sA3JJ93Xn)
+[Postman documentation](https://documenter.getpostman.com/view/34523030/2sA3JJ93Xn)
 
 ## Contribution
 
