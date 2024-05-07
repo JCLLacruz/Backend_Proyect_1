@@ -2,7 +2,6 @@ const { where } = require('sequelize');
 const { Product, Category } = require('../models/index');
 
 const CategoryController = {
-	//atributtes: category, description
 	async addCategory(req, res) {
 		try {
 			const category = await Category.create(req.body);

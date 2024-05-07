@@ -7,7 +7,7 @@ const { jwt_secret } = require('../config/config.json')['development'];
 
 describe('testing/users', () => {
     afterAll(()=> {
-        return User.destroy({where: {role: 'user'}, truncate: true});
+        return User.destroy({where: {role: 'user'}});
     });
 	const user = {
 		name: 'Jose',
@@ -47,9 +47,9 @@ describe('testing/users', () => {
     test('signIn', async()=>{
         const res = await request(app)
         .post('/users/signin')
-        .send({email: user.email, password: user.password})
+        .send({email: 'pepe@gmail.com', password: 'holiholi'})
         .expect(200)
-        expect(res.body.msg).toBe(`Welcome ${user.name}`);
+        expect(res.body.msg).toBe(`Welcome Pepe`);
         token = res.body.token;
     });
 
@@ -59,5 +59,31 @@ describe('testing/users', () => {
         .expect(200)
         .set({authorization: token});
         expect(res.body.msg).toBe('User is online');
+    });
+
+    test('deleteById', async ()=> {
+        const res = await request(app)
+        .delete('/users/id/1')
+        .expect(200)
+        .set({authorization: token});
+        expect(res.body.msg).toBe('User deleted successfully.');
+    })
+
+    test('updateById', async ()=> {
+        const userUpdated = {name: 'Jose',address: 'Calle Jamaica,12'};
+        const res = await request(app)
+        .put('/users/1')
+        .expect(200)
+        .send(userUpdated)
+        .set({authorization: token});
+        expect(res.body.msg).toBe('User was updated');
+    })
+
+    test ('logout', async () => {
+        const res = await request(app)
+        .delete('/users/logout')
+        .expect(200)
+        .set({authorization: token})
+        expect(res.body.msg).toBe('Logout correctly');
     })
 });

@@ -103,8 +103,7 @@ const UserController = {
 				},
 			});
 			const user = await User.findByPk(req.params.id);
-			user.setCategories(req.body.CategoryId);
-			res.send({ msg: 'USer was updated', user });
+			res.send({ msg: 'User was updated', user });
 		} catch (error) {
 			console.error(error);
 			next(error);
