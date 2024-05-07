@@ -11,7 +11,7 @@ describe('testing/users', () => {
     });
 	const user = {
 		name: 'Jose',
-		email: 'jose@gmail.com',
+		email: '19lacruz88@gmail.com',
 		address: 'Calle Salamanca, 2',
         birthdate: '1965-06-01',
 		phone: 656656656,
@@ -37,7 +37,8 @@ describe('testing/users', () => {
     
     test('confirmUser', async()=>{
         const emailToken = jwt.sign({ email: user.email }, jwt_secret, { expiresIn: '48h' });
-        const res = await request(app).get(`/users/confirm/${emailToken}`)
+        const res = await request(app)
+        .get(`/users/confirm/${emailToken}`)
         .expect(201);
         expect(res.body.msg).toBe('User email was confirmed');
     });
