@@ -7,13 +7,13 @@ const transporter = require('../config/nodemailer.js');
 const PORT = require('../index.js');
 
 const UserController = {
-	async singUp(req, res, next) {
+	async signUp(req, res, next) {
 		try {
 			const role = (req.body.role = 'user');
 			const password = bcrypt.hashSync(req.body.password, 10);
 			const time = Date.now();
 			const today = new Date(time);
-			const user = User.create({
+			const user = await User.create({
 				...req.body,
 				created_at: today,
 				password,
@@ -28,7 +28,7 @@ const UserController = {
 				html: `<h3> Welcome to PokeShop, only one step more to enjoy!</h3>
 				<a href="${url}">Click to confirm your email</a>`,
 			});
-			res.status(201).send({ msg: 'Email to confirm user sended', user });
+			res.status(201).send({ msg: 'User created', user });
 		} catch (error) {
 			console.error(error);
 			next(error);
@@ -41,7 +41,7 @@ const UserController = {
 			await User.update(
 				{ confirmed: true },
 				{
-					where: { email: payload.emailToken },
+					where: { email: payload.email },
 				}
 			);
 			res.status(201).send({ msg: 'User email was confirmed' });
@@ -50,7 +50,7 @@ const UserController = {
 			res.status(500).send(error);
 		}
 	},
-	async singIn(req, res, next) {
+	async signIn(req, res, next) {
 		try {
 			const user = await User.findOne({ where: { email: req.body.email } });
 			if (!user) {

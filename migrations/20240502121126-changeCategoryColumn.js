@@ -3,8 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    async up(queryInterface, Sequelize) {
-      return queryInterface.changeColumn('Category', 'category', {
+      return queryInterface.changeColumn('Categories', 'category', {
         type: Sequelize.STRING,
         unique: true,
       });

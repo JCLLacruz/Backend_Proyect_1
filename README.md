@@ -288,8 +288,11 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 ## License
 
 This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
-```
 
 Now it includes a section instructing how to run Sequelize seeders to create initial data.
 
 ```
+<<<<<<< HEAD
+=======
+```
+>>>>>>> 2db03d9e99444a33416112abd770b7b4d7e4c36d
