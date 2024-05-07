@@ -57,6 +57,7 @@ describe('testing/users', () => {
         const res = await request(app)
         .get(`/users/getoneonline/1`)
         .expect(200)
+        .set({authorization: token});
         expect(res.body.msg).toBe('User is online');
     })
 });
