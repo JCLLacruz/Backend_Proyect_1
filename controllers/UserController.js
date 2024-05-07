@@ -110,7 +110,6 @@ const UserController = {
 		}
 	},
 	async logout(req, res) {
-		console.log(req);
 		try {
 			await Token.destroy({
 				where: {
