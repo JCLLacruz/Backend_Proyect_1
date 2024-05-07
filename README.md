@@ -97,7 +97,7 @@ Thanks to Sequelize's relations via intermediate tables, when a new product is c
 - Only admin or superadmin users can edit, delete, or create new products.
 - Reviews can be added, updated, or deleted only by authenticated users.
 - Orders can be created only by authenticated users.
-  ```
+
 ## Documentation
 
 [Postman documentation](https://documenter.getpostman.com/view/34523030/2sA3JJ93Xn)
