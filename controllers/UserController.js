@@ -7,7 +7,7 @@ const transporter = require('../config/nodemailer.js');
 const PORT = require('../index.js');
 
 const UserController = {
-	async singUp(req, res, next) {
+	async signUp(req, res, next) {
 		try {
 			const role = (req.body.role = 'user');
 			const password = bcrypt.hashSync(req.body.password, 10);
@@ -50,7 +50,7 @@ const UserController = {
 			res.status(500).send(error);
 		}
 	},
-	async singIn(req, res, next) {
+	async signIn(req, res, next) {
 		try {
 			const user = await User.findOne({ where: { email: req.body.email } });
 			if (!user) {
