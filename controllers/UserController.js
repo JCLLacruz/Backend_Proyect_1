@@ -13,7 +13,7 @@ const UserController = {
 			const password = bcrypt.hashSync(req.body.password, 10);
 			const time = Date.now();
 			const today = new Date(time);
-			const user = User.create({
+			const user = await User.create({
 				...req.body,
 				created_at: today,
 				password,
@@ -28,7 +28,7 @@ const UserController = {
 				html: `<h3> Welcome to PokeShop, only one step more to enjoy!</h3>
 				<a href="${url}">Click to confirm your email</a>`,
 			});
-			res.status(201).send({ msg: 'Email to confirm user sended', user });
+			res.status(201).send({ msg: 'User created', user });
 		} catch (error) {
 			console.error(error);
 			next(error);
@@ -41,7 +41,7 @@ const UserController = {
 			await User.update(
 				{ confirmed: true },
 				{
-					where: { email: payload.emailToken },
+					where: { email: payload.email },
 				}
 			);
 			res.status(201).send({ msg: 'User email was confirmed' });
