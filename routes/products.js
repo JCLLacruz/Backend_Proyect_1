@@ -11,7 +11,7 @@ router.get('/price/:price', ProductController.getProductsByPrice);
 router.get('/descprice', ProductController.productsDescByPrice);
 router.get('/ascprice', ProductController.productsAscByPrice);
 router.post('/', authentication, isAdmin, uploadUserProductsImages.single('img'), ProductController.addProduct);
-router.put('/id/:id', authentication, ProductController.updateProduct);
+router.put('/id/:id', authentication, isAdmin, ProductController.updateProduct);
 router.put('/:id', authentication, isAdmin, ProductController.updateProduct);
 router.delete('/id/:id', authentication, isAdmin, ProductController.deleteProductById);
 

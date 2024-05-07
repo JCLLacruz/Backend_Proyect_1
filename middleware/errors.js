@@ -15,7 +15,7 @@ const handleValidationError = (err, res) => {
     ) {
       handleValidationError(err, res);
     } else {
-      res.status(500).send({ msg: "Hubo un problema",err });
+      res.status(500).send({ msg: "Thats a problem",err });
     }
   };
   

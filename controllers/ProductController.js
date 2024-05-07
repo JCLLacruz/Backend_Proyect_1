@@ -8,16 +8,16 @@ const ProductController = {
 			if (req.file) req.body.img = req.file.filename;
 			const product = await Product.create(req.body);
 			product.addCategory(req.body.CategoryId);
-			res.status(201).send({ msg: 'Product was created', product: product });
+			res.status(201).send({ msg: 'Product was created', product });
 		} catch (error) {
 			console.error(error);
 			next(error);
 		}
 	},
-	async updateProduct(req, res) {
+	async updateProduct(req, res, next) {
 		try {
 			if (req.file) req.body.img = req.file.filename;
-			await Product.update(...req.body, {
+			await Product.update(req.body, {
 				where: {
 					id: req.params.id,
 				},
@@ -112,7 +112,7 @@ const ProductController = {
 				],
 				order: [['price', 'DESC']],
 			});
-			res.send({ msg: `Products ordered in descending order`, products });
+			res.send({ msg: `Products ordered by price descending`, products });
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);
@@ -127,7 +127,7 @@ const ProductController = {
 				],
 				order: [['price', 'ASC']],
 			});
-			res.send({ msg: `Products ordered in descending order`, products });
+			res.send({ msg: `Products ordered by price ascending`, products });
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);

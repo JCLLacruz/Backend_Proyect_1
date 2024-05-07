@@ -30,15 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    img: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Please fill in url image'
-        }
-      }
-    },
+    image_url: DataTypes.STRING,
     price: {
       type: DataTypes.DECIMAL,
       allowNull: false,
@@ -62,8 +54,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Product',
     getterMethods: { 
-      image_url() {
-        return `/public/images/user/products/${this.img}`;
+      imageURL() {
+        return `/public/images/user/products/${this.image_url}`;
       }
     }
   });

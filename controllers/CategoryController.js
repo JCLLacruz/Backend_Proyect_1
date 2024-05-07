@@ -5,7 +5,7 @@ const CategoryController = {
 	async addCategory(req, res) {
 		try {
 			const category = await Category.create(req.body);
-			res.status(201).send({ msg: 'Category was created', category: category });
+			res.status(201).send({ msg: 'Category was created', category });
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);
@@ -13,12 +13,12 @@ const CategoryController = {
 	},
 	async updateCategory(req, res) {
 		try {
-			const category = await category.update(req.body, {
+			const category = await Category.update(req.body, {
 				where: {
 					id: req.params.id,
 				},
 			});
-			res.send({ msg: 'Category was updated', categoryToUpdate: req.body });
+			res.send({ msg: 'Category was updated', category});
 		} catch (error) {
 			console.error(error);
 			res.status(500).send(error);
