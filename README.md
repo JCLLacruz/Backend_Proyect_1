@@ -11,6 +11,12 @@ This is a Node.js server built to serve as the backend for an online store selli
 - **jsonwebtoken**: An implementation of JSON Web Tokens.
 - **mysql2**: A MySQL client for Node.js.
 - **nodemon**: A tool that helps develop Node.js-based applications by automatically restarting the node application when file changes in the directory are detected.
+- **jest**: tool for testing.
+  
+## Diagram for DataBase
+
+![e-commerce](https://github.com/JCLLacruz/Backend_Proyect_1/assets/155624350/3d271805-1a3e-4ce2-8e02-02a1b2ed3142)
+
 
 ## Installation
 
