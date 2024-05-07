@@ -271,7 +271,9 @@ Thanks to Sequelize's relations via intermediate tables, when a new product is c
     "msg": "User deleted successfully"
   }
   ```
-```
+## Documentation
+
+[Postman documentation](https://documenter.getpostman.com/view/34523030/2sA3JJ93Xn)
 
 ## Contribution
 
@@ -283,3 +285,5 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 ```
 
 Now it includes a section instructing how to run Sequelize seeders to create initial data.
+
+```
