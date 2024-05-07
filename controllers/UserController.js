@@ -1,10 +1,9 @@
-const { User, Product, Token, Sequelize } = require('../models/index.js');
+const { User, Order, Product, Token, Sequelize } = require('../models/index.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { jwt_secret } = require('../config/config.json')['development'];
 const { Op } = Sequelize;
 const transporter = require('../config/nodemailer.js');
-const PORT = require('../index.js');
 
 const UserController = {
 	async signUp(req, res, next) {
@@ -21,12 +20,12 @@ const UserController = {
 				confirmed: false,
 			});
 			const emailToken = jwt.sign({ email: req.body.email }, jwt_secret, { expiresIn: '48h' });
-			const url = 'https://localhost:' + PORT + 'users/confirm/' + emailToken;
+			const url = 'http://localhost:3001/users/confirm/' + emailToken;
 			await transporter.sendMail({
 				to: req.body.email,
 				subject: 'Please confirm your email.',
 				html: `<h3> Welcome to PokeShop, only one step more to enjoy!</h3>
-				<a href="${url}">Click to confirm your email</a>`,
+				<a href=${url}>Click to confirm your email</a>`,
 			});
 			res.status(201).send({ msg: 'User created', user });
 		} catch (error) {
@@ -75,7 +74,11 @@ const UserController = {
 		try {
 			const user = await User.findOne({
 				where: { id: req.params.id },
-				include: [{ model: Order }, { model: Product }],
+				include: [
+					{ model: Order,
+					include: { model: Product },
+				 }
+				],
 			});
 			res.send({ msg: 'User is online', user });
 		} catch (error) {
@@ -100,8 +103,7 @@ const UserController = {
 				},
 			});
 			const user = await User.findByPk(req.params.id);
-			user.setCategories(req.body.CategoryId);
-			res.send({ msg: 'USer was updated', user });
+			res.send({ msg: 'User was updated', user });
 		} catch (error) {
 			console.error(error);
 			next(error);
