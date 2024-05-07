@@ -27,3 +27,4 @@ app.use(typeError);
 app.listen(PORT, () => `Server started on port ${PORT}`);
 
 module.exports = PORT;
+module.exports = app;
