@@ -11,6 +11,7 @@ app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 	res.setHeader('Access-Control-Allow-Headers', 'authorization');
+	res.setHeader('Access-Control-Allow-Headers', 'user');
 	next();
 });
 

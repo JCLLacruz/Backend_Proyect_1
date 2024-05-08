@@ -7,11 +7,11 @@ const { jwt_secret } = require('../config/config.json')['development'];
 describe('testing/users', () => {
 	afterAll(async () => {
 		return {
-			user: await User.destroy({ where: { role: 'user' } }),
-			products: await Product.destroy({ where: { id: 1 } }),
-			category: await Category.destroy({ where: { id: 1 } }),
-			order: await Order.destroy({ where: { id: 1 } }),
-			review: await Review.destroy({ where: { id: 1 } }),
+			users: await User.destroy({ where: { role: 'user' } }),
+			products: await Product.destroy({ where: {}, truncate: true }),
+			categories: await Category.destroy({ where: {}, truncate: true }),
+			orders: await Order.destroy({ where: {}, truncate: true }),
+			reviews: await Review.destroy({ where: {}, truncate: true }),
 		};
 	});
 
