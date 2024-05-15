@@ -2,10 +2,14 @@ const { Product, Category, ProductCategory, Sequelize, Review } = require('../mo
 const { Op } = Sequelize;
 const path = require('path');
 
+const setProductImg = (req) => {
+	if (req.file) req.body.img = req.file.filename;
+};
+
 const ProductController = {
 	async addProduct(req, res, next) {
 		try {
-			if (req.file) req.body.img = req.file.filename;
+			setProductImg(req);
 			const product = await Product.create(req.body);
 			product.addCategory(req.body.CategoryId);
 			res.status(201).send({ msg: 'Product was created', product });
@@ -16,7 +20,7 @@ const ProductController = {
 	},
 	async updateProduct(req, res, next) {
 		try {
-			if (req.file) req.body.img = req.file.filename;
+			setProductImg(req);
 			await Product.update(req.body, {
 				where: {
 					id: req.params.id,

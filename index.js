@@ -8,11 +8,9 @@ app.use(express.json());
 
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
-	res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-	res.setHeader('Access-Control-Allow-Headers', 'authorization');
-	res.setHeader('Access-Control-Allow-Headers', 'user');
-	next();
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, authorization, user');
+    next();
 });
 
 app.use('/public', express.static(path.join(__dirname, 'public')));

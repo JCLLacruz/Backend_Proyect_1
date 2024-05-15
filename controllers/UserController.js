@@ -27,7 +27,7 @@ const UserController = {
 				html: `<h3> Welcome to PokeShop, only one step more to enjoy!</h3>
 				<a href=${url}>Click to confirm your email</a>`,
 			});
-			res.status(201).send({ msg: 'User created', user });
+			res.status(201).send({ msg: `The user's email must be confirmed`, user });
 		} catch (error) {
 			console.error(error);
 			next(error);
@@ -37,11 +37,7 @@ const UserController = {
 		try {
 			const emailToken = req.params.emailToken;
 			const payload = jwt.verify(emailToken, jwt_secret);
-			await User.update(
-				{ confirmed: true },
-				{
-					where: { email: payload.email },
-				}
+			await User.save(
 			);
 			res.status(201).send({ msg: 'User email was confirmed' });
 		} catch (error) {
@@ -66,7 +62,7 @@ const UserController = {
 			await Token.create({ token, UserId: user.id });
 			res.send({ msg: `Welcome ${user.name}`, user, token });
 		} catch (error) {
-			console.error(error);
+			//console.error(error);
 			next(error);
 		}
 	},
